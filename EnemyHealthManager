@@ -7,11 +7,16 @@ public class EnemyHealthManager : MonoBehaviour {
     public int MaxHealth;
     public int CurrentHealth;
 
+    private PlayerStats thePlayerStats;
+    public int xpToGive;
+
     // Use this for initialization
     void Start()
     {
 
         CurrentHealth = MaxHealth;
+
+        thePlayerStats = FindObjectOfType<PlayerStats>();
 
     }
 
@@ -22,7 +27,7 @@ public class EnemyHealthManager : MonoBehaviour {
         {
             Destroy(gameObject);
 
-
+            thePlayerStats.AddExperience(xpToGive);
         }
     }
 
