@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerStats : MonoBehaviour {
+
+    public int currentLevel;
+
+    public int currentEXP;
+
+    public int[] nextLevel;
+
+    public int[] HPLevels;
+    public int[] attackLevels;
+    public int[] defenceLevels;
+
+    public int currentHP;
+    public int currentATK;
+    public int currentDEF;
+
+    private PlayerHealthManager thePlayerHealth;
+
+	// Use this for initialization
+	void Start () {
+        currentHP = HPLevels[1];
+        currentATK = attackLevels[1];
+        currentDEF = defenceLevels[1];
+
+        thePlayerHealth = FindObjectOfType<PlayerHealthManager>();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(currentEXP >= nextLevel[currentLevel])
+        {
+            //currentLevel ++;
+            LevelUp();
+        }
+	}
+
+    public void AddExperience (int xpToAdd)
+    {
+        currentEXP += xpToAdd;
+    }
+
+    public void LevelUp()
+    {
+        currentLevel++;
+        currentHP = HPLevels[currentLevel];
+
+        thePlayerHealth.playerMaxHealth = currentHP;
+        thePlayerHealth.playerCurrentHealth += currentHP - HPLevels[currentLevel - 1];
+
+        currentATK = attackLevels[currentLevel];
+        currentDEF = defenceLevels[currentLevel];
+        
+    }
+}
